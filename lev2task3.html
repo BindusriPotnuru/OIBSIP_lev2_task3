@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic To-Do WebApp</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            color: #333;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #ff6347;
+        }
+
+        .task-input {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .task-input input {
+            width: 80%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .task-input button {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .task-input button:hover {
+            background-color: #0056b3;
+        }
+
+        .task-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .task-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .task-list li.completed {
+            background-color: #d4edda;
+            text-decoration: line-through;
+        }
+
+        .task-list button {
+            border: none;
+            background-color: transparent;
+            color: #ff6347;
+            cursor: pointer;
+        }
+
+        .task-list button:hover {
+            color: #ff4500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Basic To-Do WebApp</h1>
+        <div class="task-input">
+            <input type="text" id="taskInput" placeholder="Add a new task">
+            <button onclick="addTask()">Add</button>
+        </div>
+        <h2>Pending Tasks</h2>
+        <ul id="pendingTasks" class="task-list"></ul>
+        <h2>Completed Tasks</h2>
+        <ul id="completedTasks" class="task-list"></ul>
+    </div>
+
+    <script>
+        function addTask() {
+            const taskInput = document.getElementById('taskInput');
+            const taskText = taskInput.value.trim();
+            if (taskText === '') {
+                alert('Please enter a task');
+                return;
+            }
+
+            const taskItem = document.createElement('li');
+            taskItem.innerHTML = `
+                ${taskText}
+                <div>
+                    <button onclick="completeTask(this)">Complete</button>
+                    <button onclick="deleteTask(this)">Delete</button>
+                </div>
+            `;
+
+            document.getElementById('pendingTasks').appendChild(taskItem);
+            taskInput.value = '';
+        }
+
+        function completeTask(button) {
+            const taskItem = button.parentElement.parentElement;
+            taskItem.classList.add('completed');
+            document.getElementById('completedTasks').appendChild(taskItem);
+            button.remove();
+        }
+
+        function deleteTask(button) {
+            const taskItem = button.parentElement.parentElement;
+            taskItem.remove();
+        }
+    </script>
+</body>
+</html>
